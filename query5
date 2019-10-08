@@ -1,0 +1,14 @@
+create trigger VegKarban
+on MegrendelesTetel
+for insert, update, delete
+as
+
+update Vevo
+set vegosszeg = isnull(vegosszeg,0) + OsszegValt
+from vevo
+inner join
+	(select t.vevoid, SUM(i.NettoAr*i.Mennyiseg) as OsszegValt
+	from telephely t
+	inner join megrendeles m on m.telephelyid = t.id
+	inner join inserted i on i.MegrendelesID = m.id
+	group by t.vevoid) VevoValtozas on vevo.id = vevovaltozas.vevoid
