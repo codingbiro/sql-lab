@@ -37,3 +37,5 @@ insert into Kategoria
 values(@Kategoria, @SzuloKategoriaId)
 
 commit
+
+exec UjKategoria 'Uszogumik', 'Játék'
